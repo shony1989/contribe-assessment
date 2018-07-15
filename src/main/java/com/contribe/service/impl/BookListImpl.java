@@ -61,7 +61,7 @@ public class BookListImpl implements BookList {
 
 	@Override
 	@Transactional
-	public int[] buy(Book... books) {//
+	public int[] buy(Book... books) throws Exception {//
 		int[] statuses = new int[books.length];
 		int i = 0;
 		for (Book book : books) {

@@ -107,12 +107,15 @@ public class BasketServiceImpl implements BasketService {
 				if (b != null) {
 					BasketBooks bb = basketBookRepo.findByBasketAndBook(b.getId(), basket.getId());
 					if (bb != null) {
-						qty = bb.getQuantity() - quantity;
+						qty = b.getQuantity() - quantity;
 						if (qty > 0) {
 							bb.setQuantity(bb.getQuantity() - quantity);
 						} else if (qty < 0) {
 							// trying to remove more than available
 							return false;
+						} else if (qty == 0) {
+							// To soft delete as its kept for audit purpose
+							bb.setIsAdded(false);
 						}
 					}
 					totalPrice = basket.getTotalPrice().subtract(b.getPrice().multiply(BigDecimal.valueOf(quantity)));
@@ -120,12 +123,7 @@ public class BasketServiceImpl implements BasketService {
 					basket.setTotalPrice(totalPrice);
 					basketRepo.save(basket);
 
-					if (qty > 0) {
-						basketBookRepo.save(bb);
-					} else if (qty == 0) {
-						// if qty is zero remove the record from basket
-						basketBookRepo.delete(bb);
-					}
+					basketBookRepo.save(bb);
 
 				} else {
 					return false;

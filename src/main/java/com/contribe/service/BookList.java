@@ -8,7 +8,7 @@ public interface BookList {
 
 	  public boolean add(Book book, int quantity);
 
-	  public int[] buy(Book... books);
+	  public int[] buy(Book... books) throws Exception;
 	  
 	  public void saveBook(Book book);
 

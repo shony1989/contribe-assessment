@@ -53,7 +53,7 @@ public class BookListIntegrationTest {
 	}
 	
 	@Test
-	public void test_status_when_buy() {
+	public void test_status_when_buy() throws Exception {
 		
 		Book[] book = new Book[2];
 		
